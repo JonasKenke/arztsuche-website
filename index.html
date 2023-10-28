@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSON Data Input</title>
+  </head>
+  <body>
+    <h1>Submit JSON Data</h1>
+    <form id="jsonForm">
+      <textarea
+        id="jsonInput"
+        rows="4"
+        cols="50"
+        placeholder="Enter JSON data here"
+      ></textarea>
+      <br />
+      <input type="submit" value="Submit JSON" />
+    </form>
+
+    <div id="response"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#jsonForm").submit(function (event) {
+          event.preventDefault();
+          var raw = $("#jsonInput").val();
+
+          var settings = {
+            url: "http://kreativhub.ddns.net:3000/info",
+            method: "POST",
+            timeout: 0,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            data: raw,
+          };
+          console.log(settings);
+          console.log(raw);
+          $.ajax(settings).done(function (response) {
+            console.log(response);
+            const jsonresp = JSON.stringify(response);
+            var settings = {
+              url: "http://kreativhub.ddns.net:3000/scrape",
+              method: "POST",
+              timeout: 0,
+              headers: {
+                "Content-Type": "application/json",
+              },
+              data: jsonresp,
+            };
+
+            $.ajax(settings).done(function (response) {
+              const workbook = new ExcelJS.Workbook();
+              const worksheet = workbook.addWorksheet("Sheet 1");
+
+              const jsonData = response;
+              console.log(jsonData);
+              // Add headers
+              const headers = Object.keys(jsonData.items[0]);
+              worksheet.addRow(headers);
+
+              // Add data
+              jsonData.items.forEach((item) => {
+                const row = [];
+                headers.forEach((header) => {
+                  row.push(item[header]);
+                });
+                worksheet.addRow(row);
+              });
+
+              // Save the Excel file
+              workbook.xlsx
+                .writeBuffer()
+                .then(function (data) {
+                  const blob = new Blob([data], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                  });
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = "output.xlsx";
+                  a.click();
+                })
+                .catch(function (error) {
+                  console.error("Error creating Excel file:", error);
+                });
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
