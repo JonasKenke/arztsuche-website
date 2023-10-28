@@ -27,7 +27,7 @@
           var raw = $("#jsonInput").val();
 
           var settings = {
-            url: "http://kreativhub.ddns.net:3000/info",
+            url: "https://kreativhub.duckdns.org/info",
             method: "POST",
             timeout: 0,
             headers: {
@@ -41,7 +41,7 @@
             console.log(response);
             const jsonresp = JSON.stringify(response);
             var settings = {
-              url: "http://kreativhub.ddns.net:3000/scrape",
+              url: "https://kreativhub.duckdns.org/scrape",
               method: "POST",
               timeout: 0,
               headers: {
