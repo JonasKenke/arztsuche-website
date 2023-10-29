@@ -2,29 +2,462 @@
 <html>
   <head>
     <title>JSON Data Input</title>
+    <style>
+        /* CSS for highlighting search results on hover */
+        ul li:hover {
+            background-color: #f2f2f2; /* Change to your desired highlight color */
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        /* CSS zur Verschönerung der Seite */
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f7f7f7;
+          margin: 0;
+          padding: 0;
+        }
+        
+        h1 {
+          background-color: #007BFF;
+          color: #fff;
+          padding: 10px;
+          text-align: center;
+        }
+  
+        form {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+  
+        h2 {
+          margin-top: 20px;
+        }
+  
+        select, input[type="text"], input[type="number"], button {
+          width: 100%;
+          padding: 10px;
+          margin: 10px 0;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+  
+        ul li:hover {
+          background-color: #f2f2f2;
+          cursor: pointer;
+        }
+  
+        button {
+          background-color: #007BFF;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+  
+        button:hover {
+          background-color: #0056b3;
+        }
+      </style>
   </head>
   <body>
-    <h1>Submit JSON Data</h1>
-    <form id="jsonForm">
-      <textarea
-        id="jsonInput"
-        rows="4"
-        cols="50"
-        placeholder="Enter JSON data here"
-      ></textarea>
-      <br />
-      <input type="submit" value="Submit JSON" />
+
+    <h1>Arzt Suche</h1>
+
+    <form id="searchForm">
+        <h2>Art des Arztes</h2>
+        <select id="doctorTypeSelect" name="doctorType">
+            <option value="N" selected>Keine Auswahl</option>
+            <option value="P">Psychotherapist</option>
+            <option value="F">Facharzt</option>
+            <option value="H">Hausarzt</option>
+        </select>
+
+        <h2>Fachrichtung / Schwerpunkt</h2>
+        <select multiple name="professionPsychotherapy[]" id="professionSelect">
+            <option value="469">Psychotherapie für Erwachsene</option>
+            <option value="470">Psychotherapie für Kinder und Jugendliche</option>
+            <option value="472">Neuropsychologische Therapie (Kinder, Jugendliche, Erwachsene)</option>
+            <option value="473">Analytische Psychotherapie/ Psychoanalyse für Erwachsene</option>
+            <option value="476">Tiefenpsychologische fundierte Psychotherapie für Erwachsene</option>
+            <option value="479">Verhaltenstherapie für Erwachsene</option>
+            <option value="711">Gruppentherapie im Rahmen der Systemischen Therapie</option>
+            <option value="712">Systemische Therapie</option>
+            <option value="713">Systemische Therapie bei Psychologischen bzw. Kinder- und Jugendlichenpsychotherapeuten</option>
+            <option value="475">Analytische Psychotherapie/ Psychoanalyse für Ki. u. Ju.</option>
+            <option value="477">Tiefenpsychologische fundierte Psychotherapie für Ki. u. Ju.</option>
+            <option value="480">Verhaltenstherapie für Ki. u. Ju.</option>
+            <option value="471">Gruppenpsychotherapie</option>
+            <option value="721">Psychosomatische Grundversorgung</option>
+            <option value="466">Autogenes Training</option>
+            <option value="467">Hypnose</option>
+            <option value="468">Jacobsonsche Relaxationstherapie</option>
+        </select>
+
+        <h2>Psychotherapeutisches Leistungsangebot</h2>
+        <ul id="specializationSelect">
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_0_1698494080206" value="2" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_0_1698494080206"><span class="focus-item">Anästhesist/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_1_1698494080206" value="3" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_1_1698494080206"><span class="focus-item">Angiologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_2_1698494080206" value="40" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_2_1698494080206"><span class="focus-item">Augenheilkunde</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_3_1698494080206" value="5" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_3_1698494080206"><span class="focus-item">Chirurg/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_4_1698494080207" value="6" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_4_1698494080207"><span class="focus-item">Endokrinologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_5_1698494080207" value="7" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_5_1698494080207"><span class="focus-item">Frauenarzt/-ärztin</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_6_1698494080207" value="8" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_6_1698494080207"><span class="focus-item">Gastroenterologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_7_1698494080207" value="262" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_7_1698494080207"><span class="focus-item">Gefäßchirurg/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_8_1698494080207" value="9" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_8_1698494080207"><span class="focus-item">Hämatologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_9_1698494080207" value="10" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_9_1698494080207"><span class="focus-item">Hausarzt/Hausärztin</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+              <input id="QUEO_0_10_1698494080207" value="11" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+              <label for="QUEO_0_10_1698494080207"><span class="focus-item">Hautarzt/-ärztin</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_11_1698494080208" value="263" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_11_1698494080208"><span class="focus-item">Herzchirurg/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_12_1698494080208" value="13" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_12_1698494080208"><span class="focus-item">HNO-Arzt/-Ärztin</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_13_1698494080208" value="14" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_13_1698494080208"><span class="focus-item">Humangenetiker/in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_14_1698494080208" value="41" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_14_1698494080208"><span class="focus-item">Internist/-in fachärztlich</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_15_1698494080208" value="15" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_15_1698494080208"><span class="focus-item">Kardiologie</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_16_1698494080208" value="704" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_16_1698494080208"><span class="focus-item">Kinder- und Jugendlichenpsychotherapeut/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_17_1698494080208" value="705" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_17_1698494080208"><span class="focus-item">Kinder- und Jugendpsychiater/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_18_1698494080208" value="16" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_18_1698494080208"><span class="focus-item">Kinderarzt/-ärztin</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_19_1698494080209" value="264" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_19_1698494080209"><span class="focus-item">Kinderchirurg/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_20_1698494080209" value="17" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_20_1698494080209"><span class="focus-item">Kinderkardiologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+              <input id="QUEO_0_30_1698494080207" value="31" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+              <label for="QUEO_0_30_1698494080207"><span class="focus-item">Orthopäde/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_31_1698494080208" value="32" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_31_1698494080208"><span class="focus-item">Pathologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_32_1698494080208" value="33" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_32_1698494080208"><span class="focus-item">Physikalische und Rehabilitative Medizin</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_33_1698494080208" value="34" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_33_1698494080208"><span class="focus-item">Plastische(r) Chirurg/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_34_1698494080208" value="35" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_34_1698494080208"><span class="focus-item">Psychotherapeut/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_35_1698494080208" value="36" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_35_1698494080208"><span class="focus-item">Radiologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_36_1698494080208" value="37" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_36_1698494080208"><span class="focus-item">Rheumatologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_37_1698494080208" value="38" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_37_1698494080208"><span class="focus-item">Transfusionsmediziner/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_38_1698494080208" value="39" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_38_1698494080208"><span class="focus-item">Urologe/in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_39_1698494080208" value="40" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_39_1698494080208"><span class="focus-item">Augenheilkunde</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_40_1698494080208" value="41" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_40_1698494080208"><span class="focus-item">Internist/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_41_1698494080208" value="42" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_41_1698494080208"><span class="focus-item">Kieferorthopäde/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_42_1698494080208" value="43" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_42_1698494080208"><span class="focus-item">Kinder- und Jugendpsychiater/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_43_1698494080208" value="44" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_43_1698494080208"><span class="focus-item">Kinderarzt/-ärztin</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_44_1698494080208" value="45" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_44_1698494080208"><span class="focus-item">Kinderchirurg/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_45_1698494080208" value="46" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_45_1698494080208"><span class="focus-item">Kinderkardiologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+              <input id="QUEO_0_45_1698494080208" value="45" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+              <label for="QUEO_0_45_1698494080208"><span class="focus-item">Kinderchirurg/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_46_1698494080208" value="46" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_46_1698494080208"><span class="focus-item">Kinderkardiologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_47_1698494080208" value="47" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_47_1698494080208"><span class="focus-item">Kinderpsychiater/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_48_1698494080208" value="48" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_48_1698494080208"><span class="focus-item">Kinderurologe/-in</span></label>
+            </li>
+            <li class="js-form-select-queo-option">
+                <input id="QUEO_0_49_1698494080208" value="49" class="js-form-select-queo-input" type="checkbox" name="fauxName">
+                <label for="QUEO_0_49_1698494080208"><span class="focus-item">Mund-Kiefer-Gesichtschirurg/-in</span></label>
+            </li>
+          
+        </ul>
+
+
+        <h2>Ort Auswahl</h2>
+
+        <input type="text" id="locationSearch" placeholder="Search for a location">
+         <div id="searchResults"></div>
+        
+        <input type="number" id="radius" name="radius" placeholder="Radius in km" min="1" max="100" step="1" value="10" required>
+        <br>
+
+        <button id ="submit" type="submit">Suche</button>
     </form>
 
-    <div id="response"></div>
+    <script>
+        window.addEventListener('load', function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"][name="specialization"]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = false;
+            });
+            document.getElementById("doctorTypeSelect").selectedIndex = 0;
+            document.getElementById("locationSearch").value = "";
+        });
 
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="fauxName"]');
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    checkboxes.forEach(function(otherCheckbox) {
+                        if (otherCheckbox !== checkbox) {
+                            otherCheckbox.checked = false;
+                        }
+                    });
+                }
+            });
+        });
+        var lat;
+        var lon;
+        var plz;
+        var ort;
+
+        const locationSearchInput = document.getElementById("locationSearch");
+        const searchResults = document.getElementById("searchResults");
+
+        // Function to fetch location data based on user input
+        async function fetchLocationData(query) {
+            try {
+                const apiUrl = "https://kreativhub.duckdns.org/forward-query";
+                const requestBody = { q: query };
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    return data;
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            return [];
+        }
+
+        // Function to display search results
+        function displayResults(results) {
+            searchResults.innerHTML = "";
+            if (results.length === 0) {
+                searchResults.innerHTML = "<p>No results found</p>";
+                return;
+            }
+            const resultList = document.createElement("ul");
+            results.forEach((result) => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${result.plz} - ${result.ort}`;
+                listItem.addEventListener("click", () => {
+                    // Handle selection and display of the chosen location
+                    locationSearchInput.value = `${result.plz} - ${result.ort}`;
+                    searchResults.innerHTML = "";
+                    // You can also store the lat and lon for later use
+                    lat = result.lat;
+                    lon = result.lon;
+                    plz = result.plz;
+                    ort = result.ort;
+                });
+                resultList.appendChild(listItem);
+            });
+            searchResults.appendChild(resultList);
+        }
+
+        // Event listener for user input
+        locationSearchInput.addEventListener("input", async (e) => {
+            const query = e.target.value;
+            if (query.length >= 3) {
+                const locationData = await fetchLocationData(query);
+                displayResults(locationData);
+            } else {
+                searchResults.innerHTML = "";
+            }
+        });
+      </script>
+
+    <script>
+
+      document.getElementById('professionSelect').style.display = 'none';
+      document.getElementById('specializationSelect').style.display = 'none';
+
+      // Event-Listener für Änderungen im Dropdown "doctorTypeSelect"
+      document.getElementById('doctorTypeSelect').addEventListener('change', function() {
+          var selectedValue = this.value;
+
+          // Verbergen Sie alle Dropdowns und die ungeordnete Liste
+          document.getElementById('professionSelect').style.display = 'none';
+          document.getElementById('specializationSelect').style.display = 'none';
+
+          if (selectedValue === 'P') {
+              document.getElementById('professionSelect').style.display = 'block';
+          } else if (selectedValue === 'F' || selectedValue === 'H') {
+              document.getElementById('specializationSelect').style.display = 'block';
+          }
+      });
+      const doctorTypeSelect = document.getElementById("doctorTypeSelect");
+      const professionSelect = document.getElementById("professionSelect");
+      const specializationSelect = document.getElementById("specializationSelect");
+
+      // Event Listener für Änderungen im Arzttyp-Dropdown
+      doctorTypeSelect.addEventListener("change", function () {
+          const selectedDoctorType = doctorTypeSelect.value;
+
+          // Verbergen Sie beide Dropdowns und die ungeordnete Liste
+          professionSelect.style.display = "none";
+          specializationSelect.style.display = "none";
+
+          // Wenn "keiner" ausgewählt ist, zeigen Sie nichts an
+          if (selectedDoctorType === "P") {
+              professionSelect.style.display = "block";
+          } else if (selectedDoctorType === "F" || selectedDoctorType === "H") {
+              specializationSelect.style.display = "block";
+          }
+      });
+  </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
     <script>
       $(document).ready(function () {
-        $("#jsonForm").submit(function (event) {
+        $("#searchForm").submit(function (event) {
           event.preventDefault();
-          var raw = $("#jsonInput").val();
+          document.getElementById("submit").disabled = true; // Deaktiviert den Button
+          document.getElementById("submit").textContent = "Bitte warten..."; // Ändert den Text auf "Bitte warten..."
+          var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+            // Initialize an empty array to store the selected values
+            var selectedValues = [];
+
+            // Loop through the checkboxes and check if they are selected
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    // If the checkbox is checked, add its value to the selectedValues array
+                    selectedValues.push(checkbox.value);
+                }
+            });
+          var doctorType = $("#doctorTypeSelect").val();
+          var professionPsychotherapy;
+          switch(doctorType){
+            case "N":
+              break;
+            case "P":
+              professionPsychotherapy = $("#professionSelect").val();
+              break;
+            case "F":
+              professionPsychotherapy = selectedValues[0];
+              break;
+            case "H":
+            professionPsychotherapy = selectedValues[0];
+              break;
+          }
+          var radius = $("#radius").val();
+          console.log(professionPsychotherapy);
+
+          var raw = `{
+            "doctorType": "${doctorType}",
+            "professionPsychotherapy[]": "${professionPsychotherapy}",
+            "location[lat]": "${lat}",
+            "location[lon]": "${lon}",
+            "location[value]": "${plz + " " + ort}",
+            "radius": "${radius}"
+        }`;
 
           var settings = {
             url: "https://kreativhub.duckdns.org/info",
@@ -55,6 +488,10 @@
               const worksheet = workbook.addWorksheet("Sheet 1");
 
               const jsonData = response;
+              if(jsonData.items.length == 0){
+                alert("No results found");
+                return;
+              }
               console.log(jsonData);
               // Add headers
               const headers = Object.keys(jsonData.items[0]);
