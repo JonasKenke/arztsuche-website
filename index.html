@@ -76,7 +76,7 @@
             <option value="H">Hausarzt</option>
         </select>
 
-        <h2>Fachrichtung / Schwerpunkt</h2>
+        <h2 id="headfa">Fachrichtung / Schwerpunkt</h2>
         <select multiple name="professionPsychotherapy[]" id="professionSelect">
             <option value="469">Psychotherapie für Erwachsene</option>
             <option value="470">Psychotherapie für Kinder und Jugendliche</option>
@@ -97,7 +97,7 @@
             <option value="468">Jacobsonsche Relaxationstherapie</option>
         </select>
 
-        <h2>Psychotherapeutisches Leistungsangebot</h2>
+        <h2 id="headpy">Psychotherapeutisches Leistungsangebot</h2>
         <ul id="specializationSelect">
             <li class="js-form-select-queo-option">
                 <input id="QUEO_0_0_1698494080206" value="2" class="js-form-select-queo-input" type="checkbox" name="fauxName">
@@ -273,9 +273,10 @@
 
         <h2>Ort Auswahl</h2>
 
-        <input type="text" id="locationSearch" placeholder="Search for a location">
+        <input type="text" id="locationSearch" placeholder="Suche einen Ort">
          <div id="searchResults"></div>
         
+        <h2>Radius</h2>
         <input type="number" id="radius" name="radius" placeholder="Radius in km" min="1" max="100" step="1" value="10" required>
         <br>
 
@@ -377,6 +378,8 @@
 
       document.getElementById('professionSelect').style.display = 'none';
       document.getElementById('specializationSelect').style.display = 'none';
+      document.getElementById('headpy').style.display = 'none';
+      document.getElementById('headfa').style.display = 'none';
 
       // Event-Listener für Änderungen im Dropdown "doctorTypeSelect"
       document.getElementById('doctorTypeSelect').addEventListener('change', function() {
@@ -385,11 +388,15 @@
           // Verbergen Sie alle Dropdowns und die ungeordnete Liste
           document.getElementById('professionSelect').style.display = 'none';
           document.getElementById('specializationSelect').style.display = 'none';
+          document.getElementById('headpy').style.display = 'none';
+          document.getElementById('headfa').style.display = 'none';
 
           if (selectedValue === 'P') {
               document.getElementById('professionSelect').style.display = 'block';
+              document.getElementById('headfa').style.display = 'block';
           } else if (selectedValue === 'F' || selectedValue === 'H') {
               document.getElementById('specializationSelect').style.display = 'block';
+              document.getElementById('headpy').style.display = 'block';
           }
       });
       const doctorTypeSelect = document.getElementById("doctorTypeSelect");
@@ -505,6 +512,21 @@
                 });
                 worksheet.addRow(row);
               });
+              var today = new Date();
+                var dd = today.getDate();
+
+                var mm = today.getMonth()+1; 
+                var yyyy = today.getFullYear();
+                if(dd<10) 
+                {
+                    dd='0'+dd;
+                } 
+
+                if(mm<10) 
+                {
+                    mm='0'+mm;
+                } 
+                today = mm+'-'+dd+'-'+yyyy;
 
               // Save the Excel file
               workbook.xlsx
@@ -516,7 +538,7 @@
                   const url = window.URL.createObjectURL(blob);
                   const a = document.createElement("a");
                   a.href = url;
-                  a.download = "output.xlsx";
+                  a.download = (today + "_" + "radius_" + radius + ".xlsx");
                   a.click();
                 })
                 .catch(function (error) {
